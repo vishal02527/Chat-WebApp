@@ -1,0 +1,134 @@
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  color: #333;
+  text-align: center;
+}
+/* Add these styles to your existing styles.css or create a new file */
+
+#historicalDataForm {
+  max-width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#historicalDataForm label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+#historicalDataForm input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 16px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#historicalDataForm button {
+  background-color: #4caf50;
+  color: white;
+  margin-left: 140px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#historicalDataForm button:hover {
+  background-color: #45a049;
+}
+
+#latestRecords {
+  list-style-type: none;
+  padding: 0;
+}
+
+#latestRecords li {
+  background-color: #fff;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+#historicalDataForm {
+  margin-bottom: 20px;
+}
+.latest-record {
+  color: red;
+}
+
+#historicalData {
+  display: none;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.styled-table {
+  width: 70%;
+  border-collapse: collapse;
+  margin: 20px auto;
+  font-size: 18px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+}
+
+.styled-table th {
+  background-color: #f8f8f8;
+}
+
+.styled-table tbody tr:hover {
+  background-color: #f5f5f5;
+  transition: all 0.3s;
+}
+
+#latestRecordsTable {
+  width: 70%;
+  border-collapse: collapse;
+  margin: 20px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#latestRecordsTable th,
+#latestRecordsTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+#latestRecordsTable th {
+  background-color: #f2f2f2;
+}
+
+#latestRecordsTable tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+#latestRecordsTable tbody tr:hover {
+  background-color: #d4edda;
+}

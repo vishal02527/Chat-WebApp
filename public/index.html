@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Latest Records</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Latest Records</h1>
+    <table id="latestRecordsTable">
+      <thead>
+        <tr>
+          <th>Temperature</th>
+          <th>Battery Level</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody id="latestRecordsContainer"></tbody>
+    </table>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      socket.on("connect", () => {
+        console.log("Socket connected successfully!");
+      });
+
+      // Function to add a new record to the table
+      function addRecordToContainer(data) {
+        const latestRecordsTableBody = document.getElementById(
+          "latestRecordsContainer"
+        );
+        const newRow = latestRecordsTableBody.insertRow(0);
+
+        const temperatureCell = newRow.insertCell(0);
+        const batteryLevelCell = newRow.insertCell(1);
+        const timeStampCell = newRow.insertCell(2);
+
+        temperatureCell.textContent = data.temperature;
+        batteryLevelCell.textContent = data.batteryLevel;
+        timeStampCell.textContent = data.timeStamp;
+      }
+
+      // Fetch and display historical data when the page loads
+      async function fetchAndDisplayHistoricalData() {
+        try {
+          const response = await fetch("/api/fetchHistoricalData");
+          const result = await response.json();
+
+          if (result.success) {
+            const historicalData = result.data;
+            historicalData.forEach((data) => {
+              addRecordToContainer(data);
+            });
+          } else {
+            console.error(result.error);
+          }
+        } catch (error) {
+          console.error("Error fetching historical data:", error);
+        }
+      }
+
+      // Event listener for new data
+      socket.on("newData", (data) => {
+        // Update latest records in real-time
+        addRecordToContainer(data);
+      });
+
+      // Fetch and display historical data when the page loads
+      fetchAndDisplayHistoricalData();
+    </script>
+  </body>
+</html>

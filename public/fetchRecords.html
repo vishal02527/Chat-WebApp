@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch Records</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <h1>Historical Data</h1>
+    <form id="historicalDataForm">
+      <label for="startDate">Start Date:</label>
+      <input type="datetime-local" id="startDate" name="startDate" />
+
+      <label for="endDate">End Date:</label>
+      <input type="datetime-local" id="endDate" name="endDate" />
+
+      <button type="button" onclick="fetchHistoricalData()">Fetch Data</button>
+    </form>
+
+    <div id="historicalData"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      async function fetchHistoricalData() {
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+
+        try {
+          const response = await fetch(
+            `/api/fetchHistoricalData?startDate=${startDate}&endDate=${endDate}`
+          );
+          const result = await response.json();
+
+          if (result.success) {
+            const historicalData = result.data;
+            const historicalDataContainer =
+              document.getElementById("historicalData");
+            historicalDataContainer.innerHTML = "";
+
+            historicalDataContainer.style.display = "block";
+
+            // Create a styled table
+            const table = document.createElement("table");
+            table.classList.add("styled-table");
+
+            // Create table header
+            const headerRow = table.insertRow(0);
+            const headers = ["Temperature", "Battery Level", "Timestamp"];
+
+            headers.forEach((header) => {
+              const th = document.createElement("th");
+              th.textContent = header;
+              headerRow.appendChild(th);
+            });
+
+            // Create table rows
+            historicalData.forEach((data, index) => {
+              const row = table.insertRow(index + 1);
+              const cells = [
+                data.temperature,
+                data.batteryLevel,
+                data.timeStamp,
+              ];
+
+              cells.forEach((cellData) => {
+                const cell = row.insertCell(-1);
+                cell.textContent = cellData;
+              });
+            });
+
+            historicalDataContainer.appendChild(table);
+          } else {
+            alert(result.error);
+          }
+        } catch (error) {
+          console.error("Error fetching historical data:", error);
+        }
+      }
+    </script>
+  </body>
+</html>
